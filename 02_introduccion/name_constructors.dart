@@ -13,6 +13,10 @@ void main() {
 
   print("libreria: ${lupita.toString()}");
   
+  //fromJson
+  final lupitaJson = libreria.fromJson(jsonDecode);
+  print("json: $lupitaJson");
+  
   
 }
 
