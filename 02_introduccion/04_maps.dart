@@ -6,6 +6,7 @@ void main() {
     "empleados": 2,
     "isopen": true,
     "monedas": 200.5,
+    // ignore: equal_keys_in_map
     "productos": {
       1: "lapiz",
       2: "esfero",
