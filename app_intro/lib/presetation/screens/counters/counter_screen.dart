@@ -1,21 +1,61 @@
 import 'package:flutter/material.dart';
 
 class CounterScreen extends StatefulWidget {
-  CounterScreen({super.key});
-
-  int click = 0;
+  const CounterScreen({super.key});
 
   @override
   State<CounterScreen> createState() => _CounterScreenState();
 }
 
 class _CounterScreenState extends State<CounterScreen> {
+  int click = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Counter"),
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder:
+                    (context) => AlertDialog(
+                      title: Text(
+                        "Counter App",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                      content: Text(
+                        "Este es un contador de clicks que se incrementa y decrementa, \n\nDesarrollado por @isnotcristhianr.dev",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "Close",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w900,
+                              color: Colors.grey[800],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+              );
+            },
+            icon: Icon(Icons.info),
+          ),
+        ],
         // backgroundColor: Colors.grey,
       ),
       body: Center(
@@ -23,12 +63,12 @@ class _CounterScreenState extends State<CounterScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "${widget.click}",
+              "$click",
               style: TextStyle(fontSize: 100, fontWeight: FontWeight.w100),
             ),
             Text(
-              "Click${widget.click == 1 ? "" : "s"}",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w100),
+              "Click${click == 1 ? "" : "s"}",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
             ),
           ],
         ),
@@ -37,37 +77,51 @@ class _CounterScreenState extends State<CounterScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(width: 10),
-          FloatingActionButton(
-            backgroundColor: Colors.grey[800],
+          ActionButton(
+            icon: Icon(Icons.remove, color: Colors.white),
             onPressed: () {
               setState(() {
-                widget.click--;
+                if (click <= 0) return;
+                click--;
               });
             },
-            child: Icon(Icons.remove, color: Colors.white),
           ),
           SizedBox(width: 10),
-          FloatingActionButton(
-            backgroundColor: Colors.grey[800],
+          ActionButton(
+            icon: Icon(Icons.add, color: Colors.white),
             onPressed: () {
               setState(() {
-                widget.click++;
+                click++;
               });
             },
-            child: Icon(Icons.add, color: Colors.white),
           ),
           SizedBox(width: 10),
-          FloatingActionButton(
-            backgroundColor: Colors.grey[800],
+          ActionButton(
+            icon: Icon(Icons.refresh, color: Colors.white),
             onPressed: () {
               setState(() {
-                widget.click = 0;
+                click = 0;
               });
             },
-            child: Icon(Icons.refresh, color: Colors.white),
           ),
         ],
       ),
+    );
+  }
+}
+
+class ActionButton extends StatelessWidget {
+  final Icon icon;
+  final Function() onPressed;
+
+  const ActionButton({super.key, required this.icon, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: Colors.grey[800],
+      onPressed: onPressed,
+      child: icon,
     );
   }
 }
