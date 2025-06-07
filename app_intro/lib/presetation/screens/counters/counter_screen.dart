@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:convert';
 
 class CounterScreen extends StatefulWidget {
   const CounterScreen({super.key});
@@ -9,15 +10,43 @@ class CounterScreen extends StatefulWidget {
   State<CounterScreen> createState() => _CounterScreenState();
 }
 
+class SavedCounter {
+  String name;
+  int value;
+  final String date;
+
+  SavedCounter({required this.name, required this.value, required this.date});
+
+  Map<String, dynamic> toJson() => {'name': name, 'value': value, 'date': date};
+
+  factory SavedCounter.fromJson(Map<String, dynamic> json) => SavedCounter(
+    name: json['name'],
+    value: json['value'],
+    date: json['date'],
+  );
+}
+
 class _CounterScreenState extends State<CounterScreen> {
   int click = 0;
   final String _counterKey = 'counter_value';
+  final String _historyKey = 'counter_history';
   late SharedPreferences _prefs;
+  List<SavedCounter> _history = [];
+  final _nameController = TextEditingController();
+  final PageController _pageController = PageController();
 
   @override
   void initState() {
     super.initState();
     _loadCounter();
+    _loadHistory();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _pageController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadCounter() async {
@@ -29,6 +58,110 @@ class _CounterScreenState extends State<CounterScreen> {
 
   Future<void> _saveCounter() async {
     await _prefs.setInt(_counterKey, click);
+  }
+
+  Future<void> _loadHistory() async {
+    _prefs = await SharedPreferences.getInstance();
+    final historyJson = _prefs.getStringList(_historyKey) ?? [];
+    setState(() {
+      _history =
+          historyJson
+              .map((item) => SavedCounter.fromJson(json.decode(item)))
+              .toList();
+    });
+  }
+
+  Future<void> _saveToHistory(String name) async {
+    final counter = SavedCounter(
+      name: name,
+      value: click,
+      date: DateTime.now().toString(),
+    );
+    _history.insert(0, counter);
+    await _saveHistoryToPrefs();
+  }
+
+  Future<void> _saveHistoryToPrefs() async {
+    final historyJson =
+        _history.map((counter) => json.encode(counter.toJson())).toList();
+    await _prefs.setStringList(_historyKey, historyJson);
+    setState(() {});
+  }
+
+  Future<void> _deleteCounter(int index) async {
+    setState(() {
+      _history.removeAt(index);
+    });
+    await _saveHistoryToPrefs();
+  }
+
+  Future<void> _editCounter(int index) async {
+    _nameController.text = _history[index].name;
+    return showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Editar Contador'),
+            content: TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(
+                labelText: 'Nombre del contador',
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (_nameController.text.isNotEmpty) {
+                    setState(() {
+                      _history[index].name = _nameController.text;
+                    });
+                    _saveHistoryToPrefs();
+                    _nameController.clear();
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text('Guardar'),
+              ),
+            ],
+          ),
+    );
+  }
+
+  Future<void> _showSaveDialog() async {
+    _nameController.clear();
+    return showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Guardar Contador'),
+            content: TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(
+                labelText: 'Nombre del contador',
+                hintText: 'Ej: Contador del Lunes',
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (_nameController.text.isNotEmpty) {
+                    _saveToHistory(_nameController.text);
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text('Guardar'),
+              ),
+            ],
+          ),
+    );
   }
 
   Future<void> _launchURL() async {
@@ -45,6 +178,7 @@ class _CounterScreenState extends State<CounterScreen> {
         title: const Text("Counter"),
         centerTitle: true,
         actions: [
+          IconButton(onPressed: _showSaveDialog, icon: const Icon(Icons.save)),
           IconButton(
             onPressed: () {
               showDialog(
@@ -100,23 +234,95 @@ class _CounterScreenState extends State<CounterScreen> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "$click",
-              style: const TextStyle(
-                fontSize: 100,
-                fontWeight: FontWeight.w100,
+      body: PageView(
+        controller: _pageController,
+        children: [
+          // Página del Contador
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "$click",
+                  style: const TextStyle(
+                    fontSize: 100,
+                    fontWeight: FontWeight.w100,
+                  ),
+                ),
+                Text(
+                  "Click${click == 1 ? "" : "s"}",
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "Desliza a la derecha para ver el historial",
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+              ],
+            ),
+          ),
+          // Página del Historial
+          Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  "Historial de Contadores",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            Text(
-              "Click${click == 1 ? "" : "s"}",
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
-            ),
-          ],
-        ),
+              Expanded(
+                child:
+                    _history.isEmpty
+                        ? const Center(
+                          child: Text(
+                            'No hay contadores guardados',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                        )
+                        : ListView.builder(
+                          itemCount: _history.length,
+                          itemBuilder: (context, index) {
+                            final counter = _history[index];
+                            return Dismissible(
+                              key: Key(counter.date),
+                              background: Container(
+                                color: Colors.red,
+                                alignment: Alignment.centerRight,
+                                padding: const EdgeInsets.only(right: 20),
+                                child: const Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              direction: DismissDirection.endToStart,
+                              onDismissed: (direction) => _deleteCounter(index),
+                              child: ListTile(
+                                title: Text(counter.name),
+                                subtitle: Text(
+                                  'Fecha: ${counter.date.split('.')[0]}',
+                                  style: const TextStyle(fontSize: 12),
+                                ),
+                                trailing: Text(
+                                  '${counter.value} clicks',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                leading: const Icon(Icons.history),
+                                onTap: () => _editCounter(index),
+                              ),
+                            );
+                          },
+                        ),
+              ),
+            ],
+          ),
+        ],
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
