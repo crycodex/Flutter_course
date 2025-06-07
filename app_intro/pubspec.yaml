@@ -37,6 +37,8 @@ dependencies:
 
   #icons
   flutter_launcher_icons: ^0.14.3
+  #splash
+  flutter_native_splash: ^2.4.6
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +66,13 @@ flutter_launcher_icons:
     generate: false
   macos:
     generate: false
+
+#splash
+flutter_native_splash:
+  color: "#fff9f9"
+  image: "lib/assets/icons/logo.png"
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
