@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
@@ -175,6 +176,15 @@ class _CounterScreenState extends State<CounterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            _pageController.previousPage(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+            );
+          },
+        ),
         title: const Text("Counter"),
         centerTitle: true,
         actions: [
@@ -234,95 +244,140 @@ class _CounterScreenState extends State<CounterScreen> {
           ),
         ],
       ),
-      body: PageView(
-        controller: _pageController,
-        children: [
-          // Página del Contador
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: RawKeyboardListener(
+        focusNode: FocusNode(),
+        onKey: (RawKeyEvent event) {
+          if (event is RawKeyDownEvent) {
+            if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+              _pageController.nextPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+            } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
+              _pageController.previousPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              );
+            }
+          }
+        },
+        child: PageView(
+          controller: _pageController,
+          children: [
+            // Página del Contador
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "$click",
+                    style: const TextStyle(
+                      fontSize: 100,
+                      fontWeight: FontWeight.w100,
+                    ),
+                  ),
+                  Text(
+                    "Click${click == 1 ? "" : "s"}",
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back),
+                        onPressed: () {
+                          _pageController.previousPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                      ),
+                      const Text(
+                        "Navega con flechas o botones",
+                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_forward),
+                        onPressed: () {
+                          _pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            // Página del Historial
+            Column(
               children: [
-                Text(
-                  "$click",
-                  style: const TextStyle(
-                    fontSize: 100,
-                    fontWeight: FontWeight.w100,
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    "Historial de Contadores",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(
-                  "Click${click == 1 ? "" : "s"}",
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  "Desliza a la derecha para ver el historial",
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                Expanded(
+                  child:
+                      _history.isEmpty
+                          ? const Center(
+                            child: Text(
+                              'No hay contadores guardados',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          )
+                          : ListView.builder(
+                            itemCount: _history.length,
+                            itemBuilder: (context, index) {
+                              final counter = _history[index];
+                              return Dismissible(
+                                key: Key(counter.date),
+                                background: Container(
+                                  color: Colors.red,
+                                  alignment: Alignment.centerRight,
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                direction: DismissDirection.endToStart,
+                                onDismissed:
+                                    (direction) => _deleteCounter(index),
+                                child: ListTile(
+                                  title: Text(counter.name),
+                                  subtitle: Text(
+                                    'Fecha: ${counter.date.split('.')[0]}',
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
+                                  trailing: Text(
+                                    '${counter.value} clicks',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  leading: const Icon(Icons.history),
+                                  onTap: () => _editCounter(index),
+                                ),
+                              );
+                            },
+                          ),
                 ),
               ],
             ),
-          ),
-          // Página del Historial
-          Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                  "Historial de Contadores",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Expanded(
-                child:
-                    _history.isEmpty
-                        ? const Center(
-                          child: Text(
-                            'No hay contadores guardados',
-                            style: TextStyle(fontSize: 16, color: Colors.grey),
-                          ),
-                        )
-                        : ListView.builder(
-                          itemCount: _history.length,
-                          itemBuilder: (context, index) {
-                            final counter = _history[index];
-                            return Dismissible(
-                              key: Key(counter.date),
-                              background: Container(
-                                color: Colors.red,
-                                alignment: Alignment.centerRight,
-                                padding: const EdgeInsets.only(right: 20),
-                                child: const Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              direction: DismissDirection.endToStart,
-                              onDismissed: (direction) => _deleteCounter(index),
-                              child: ListTile(
-                                title: Text(counter.name),
-                                subtitle: Text(
-                                  'Fecha: ${counter.date.split('.')[0]}',
-                                  style: const TextStyle(fontSize: 12),
-                                ),
-                                trailing: Text(
-                                  '${counter.value} clicks',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                leading: const Icon(Icons.history),
-                                onTap: () => _editCounter(index),
-                              ),
-                            );
-                          },
-                        ),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
