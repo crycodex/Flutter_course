@@ -207,7 +207,7 @@ class _CounterScreenState extends State<CounterScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           const Text(
-                            "Este es un contador de clicks que se incrementa y decrementa.",
+                            "Este es un contador de clicks que se incrementa y decrementa. \n\nDesarrollado por: ",
                             style: TextStyle(fontSize: 16),
                           ),
                           const SizedBox(height: 8),
@@ -217,7 +217,7 @@ class _CounterScreenState extends State<CounterScreen> {
                               "@isnotcristhianr.dev",
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Colors.blue[700],
+                                color: Colors.grey[700],
                                 decoration: TextDecoration.underline,
                               ),
                             ),
