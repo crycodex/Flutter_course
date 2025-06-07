@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CounterScreen extends StatefulWidget {
   const CounterScreen({super.key});
@@ -9,12 +11,38 @@ class CounterScreen extends StatefulWidget {
 
 class _CounterScreenState extends State<CounterScreen> {
   int click = 0;
+  final String _counterKey = 'counter_value';
+  late SharedPreferences _prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCounter();
+  }
+
+  Future<void> _loadCounter() async {
+    _prefs = await SharedPreferences.getInstance();
+    setState(() {
+      click = _prefs.getInt(_counterKey) ?? 0;
+    });
+  }
+
+  Future<void> _saveCounter() async {
+    await _prefs.setInt(_counterKey, click);
+  }
+
+  Future<void> _launchURL() async {
+    final Uri url = Uri.parse('https://www.isnotcristhianr.dev');
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Counter"),
+        title: const Text("Counter"),
         centerTitle: true,
         actions: [
           IconButton(
@@ -31,15 +59,30 @@ class _CounterScreenState extends State<CounterScreen> {
                           color: Colors.grey[800],
                         ),
                       ),
-                      content: Text(
-                        "Este es un contador de clicks que se incrementa y decrementa, \n\nDesarrollado por @isnotcristhianr.dev",
-                        style: TextStyle(fontSize: 16),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "Este es un contador de clicks que se incrementa y decrementa.",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(height: 8),
+                          GestureDetector(
+                            onTap: _launchURL,
+                            child: Text(
+                              "@isnotcristhianr.dev",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.blue[700],
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       actions: [
                         TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
+                          onPressed: () => Navigator.pop(context),
                           child: Text(
                             "Close",
                             style: TextStyle(
@@ -53,10 +96,9 @@ class _CounterScreenState extends State<CounterScreen> {
                     ),
               );
             },
-            icon: Icon(Icons.info),
+            icon: const Icon(Icons.info),
           ),
         ],
-        // backgroundColor: Colors.grey,
       ),
       body: Center(
         child: Column(
@@ -64,11 +106,14 @@ class _CounterScreenState extends State<CounterScreen> {
           children: [
             Text(
               "$click",
-              style: TextStyle(fontSize: 100, fontWeight: FontWeight.w100),
+              style: const TextStyle(
+                fontSize: 100,
+                fontWeight: FontWeight.w100,
+              ),
             ),
             Text(
               "Click${click == 1 ? "" : "s"}",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
             ),
           ],
         ),
@@ -76,31 +121,34 @@ class _CounterScreenState extends State<CounterScreen> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           ActionButton(
-            icon: Icon(Icons.remove, color: Colors.white),
+            icon: const Icon(Icons.remove, color: Colors.white),
             onPressed: () {
               setState(() {
                 if (click <= 0) return;
                 click--;
+                _saveCounter();
               });
             },
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           ActionButton(
-            icon: Icon(Icons.add, color: Colors.white),
+            icon: const Icon(Icons.add, color: Colors.white),
             onPressed: () {
               setState(() {
                 click++;
+                _saveCounter();
               });
             },
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           ActionButton(
-            icon: Icon(Icons.refresh, color: Colors.white),
+            icon: const Icon(Icons.refresh, color: Colors.white),
             onPressed: () {
               setState(() {
                 click = 0;
+                _saveCounter();
               });
             },
           ),
