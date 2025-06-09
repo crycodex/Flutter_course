@@ -244,10 +244,10 @@ class _CounterScreenState extends State<CounterScreen> {
           ),
         ],
       ),
-      body: RawKeyboardListener(
+      body: KeyboardListener(
         focusNode: FocusNode(),
-        onKey: (RawKeyEvent event) {
-          if (event is RawKeyDownEvent) {
+        onKeyEvent: (KeyEvent event) {
+          if (event is KeyDownEvent) {
             if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
               _pageController.nextPage(
                 duration: const Duration(milliseconds: 300),
