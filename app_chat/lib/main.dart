@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Chat App Simulator',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme(selector: 0).theme(),
+      theme: AppTheme(selector: 1).theme(),
       initialRoute: AppRoutes.welcome,
       getPages: AppRoutes.pages,
     );

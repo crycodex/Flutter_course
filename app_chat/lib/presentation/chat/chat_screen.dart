@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 
 //WIDGETS
 import '../widgets/chats/msg_bubble.dart';
+import '../widgets/chats/other_msg_bubble.dart';
+import '../widgets/shared/msg_field_box.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -42,10 +44,11 @@ class _ChatBody extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 100,
                 itemBuilder: (context, index) {
-                  return MsgBubble();
+                  return index % 2 == 0 ? MsgBubble() : OtherMsgBubble();
                 },
               ),
             ),
+            MsgFieldBox(),
           ],
         ),
       ),
