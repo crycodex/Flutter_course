@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:app_chat/routes/routes.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -11,7 +11,7 @@ class WelcomeScreen extends StatelessWidget {
       body: Center(
         child: FilledButton(
           onPressed: () {
-            Get.toNamed("/chat");
+              Navigator.pushNamed(context, AppRoutes.chat);
           },
           child: Text('Start Chat'),
         ),
