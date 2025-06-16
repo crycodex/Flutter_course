@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
+//ENTITIES
+import 'package:app_chat/domain/entities/msg.dart';
+
 class OtherMsgBubble extends StatelessWidget {
-  const OtherMsgBubble({super.key});
+  const OtherMsgBubble({super.key, required this.msg, required this.date});
+
+  final Msg msg;
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +21,12 @@ class OtherMsgBubble extends StatelessWidget {
             color: Colors.grey[200],
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Text('OtherMsgBubble'),
+          child: Column(
+            children: [
+              Text(msg.text),
+              Text(date.toString(), style: TextStyle(fontSize: 8)),
+            ],
+          ),
         ),
       ],
     );

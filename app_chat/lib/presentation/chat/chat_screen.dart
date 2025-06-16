@@ -5,6 +5,13 @@ import '../widgets/chats/msg_bubble.dart';
 import '../widgets/chats/other_msg_bubble.dart';
 import '../widgets/shared/msg_field_box.dart';
 
+//PROVIDERS
+import '../providers/chat_provider.dart';
+import 'package:provider/provider.dart';
+
+//ENTITIES
+import 'package:app_chat/domain/entities/msg.dart';
+
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
 
@@ -30,10 +37,13 @@ class ChatScreen extends StatelessWidget {
 }
 
 class _ChatBody extends StatelessWidget {
-  const _ChatBody();
+  _ChatBody();
 
   @override
   Widget build(BuildContext context) {
+    final chatProvider = context.watch<ChatProvider>();
+    final msgs = chatProvider.msgs;
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -41,9 +51,12 @@ class _ChatBody extends StatelessWidget {
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: 100,
+                itemCount: msgs.length,
                 itemBuilder: (context, index) {
-                  return index % 2 == 0 ? MsgBubble() : OtherMsgBubble();
+                  final msg = msgs[index];
+                  return (msg.who == Who.me)
+                      ? MsgBubble(msg: msg, date: msg.date.toLocal())
+                      : OtherMsgBubble(msg: msg, date: msg.date.toLocal());
                 },
               ),
             ),

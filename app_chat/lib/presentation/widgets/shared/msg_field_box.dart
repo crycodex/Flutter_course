@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+//PROVIDERS
+import '../../providers/chat_provider.dart';
+import 'package:provider/provider.dart';
+
 class MsgFieldBox extends StatelessWidget {
   const MsgFieldBox({super.key});
 
@@ -28,9 +32,10 @@ class MsgFieldBox extends StatelessWidget {
         ),
         suffixIcon: IconButton(
           onPressed: () {
+            final chatProvider = context.read<ChatProvider>();
             final text = textController.text;
             textController.clear();
-            print('send: $text');
+            chatProvider.sendMsg(text);
             focusNode.requestFocus();
           },
           icon: Icon(Icons.send, color: colors.primary),
@@ -38,7 +43,9 @@ class MsgFieldBox extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       ),
       onFieldSubmitted: (value) {
-        print('onFieldSubmitted: $value');
+        final chatProvider = context.read<ChatProvider>();
+        final text = textController.text;
+        chatProvider.sendMsg(text);
         textController.clear();
         focusNode.requestFocus();
       },
