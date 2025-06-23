@@ -4,6 +4,15 @@ import 'package:flutter/material.dart';
 class ChatProvider extends ChangeNotifier {
   final ScrollController chatScrollController = ScrollController();
 
+  //emisor
+  Who _selectedSender = Who.me;
+  Who get selectedSender => _selectedSender;
+
+  void changeSender(Who sender) {
+    _selectedSender = sender;
+    notifyListeners();
+  }
+
   List<Msg> msgs = [
     Msg(text: "Hola", who: Who.me),
     Msg(text: "Hola", who: Who.other),
@@ -12,7 +21,7 @@ class ChatProvider extends ChangeNotifier {
   Future<void> sendMsg(String text) async {
     if (text.isEmpty) return;
 
-    final newMsg = Msg(text: text, who: Who.me);
+    final newMsg = Msg(text: text, who: selectedSender);
     msgs.add(newMsg);
     moveScrollToBottom();
     notifyListeners();
