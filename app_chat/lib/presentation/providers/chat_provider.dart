@@ -13,10 +13,7 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Msg> msgs = [
-    Msg(text: "Hola", who: Who.me),
-    Msg(text: "Hola", who: Who.other),
-  ];
+  List<Msg> msgs = [];
 
   Future<void> sendMsg(String text) async {
     if (text.isEmpty) return;
@@ -24,6 +21,11 @@ class ChatProvider extends ChangeNotifier {
     final newMsg = Msg(text: text, who: selectedSender);
     msgs.add(newMsg);
     moveScrollToBottom();
+    notifyListeners();
+  }
+
+  void clearMessages() {
+    msgs.clear();
     notifyListeners();
   }
 
