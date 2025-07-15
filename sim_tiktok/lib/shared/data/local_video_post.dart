@@ -48,6 +48,14 @@ List<Map<String, dynamic>> videoPost=[
     "views": 500,
   },
   {
+    "name": "Palomas en el puente",
+    "caption": "Palomas en el puente",
+    "videoUrl": "lib/assets/videos/7.mp4",
+    "likes": 30,
+    "comments": 1,
+    "views": 2,
+  },
+  {
     "name": "RoadTrip en el desierto",
     "caption": "RoadTrip en el desierto",
     "videoUrl": "lib/assets/videos/8.mp4",
