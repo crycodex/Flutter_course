@@ -33,6 +33,7 @@ dependencies:
     sdk: flutter
   provider: ^6.1.5
   intl: ^0.20.2
+  animate_do: ^4.2.0
 
 dev_dependencies:
 
