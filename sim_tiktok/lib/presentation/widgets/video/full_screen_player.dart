@@ -39,7 +39,8 @@ class _FullScreenPlayerState extends State<FullScreenPlayer> {
         setState(() {
           isInitialized = true;
         });
-        //reproducir el video
+        // Reproducir el video y activar el loop
+        await videoPlayerController.setLooping(true);
         await videoPlayerController.play();
       }
     } catch (e) {
@@ -53,9 +54,19 @@ class _FullScreenPlayerState extends State<FullScreenPlayer> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return AspectRatio(
+   /*  return AspectRatio(
       aspectRatio: videoPlayerController.value.aspectRatio,
       child: VideoPlayer(videoPlayerController),
+    ); */
+    return GestureDetector(
+      onTap: () {
+        if (videoPlayerController.value.isPlaying) {
+          videoPlayerController.pause();
+        } else {
+          videoPlayerController.play();
+        }
+      },
+      child: AspectRatio(aspectRatio: videoPlayerController.value.aspectRatio, child: VideoPlayer(videoPlayerController),),
     );
   }
 }
