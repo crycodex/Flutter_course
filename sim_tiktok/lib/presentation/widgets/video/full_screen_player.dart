@@ -17,16 +17,12 @@ class FullScreenPlayer extends StatefulWidget {
 
 class _FullScreenPlayerState extends State<FullScreenPlayer> {
   late VideoPlayerController videoPlayerController;
+  bool isInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    videoPlayerController = VideoPlayerController.asset(widget.videoUrl)
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-        videoPlayerController.play();
-      });
+    _initializeVideo();
   }
 
   @override
@@ -35,20 +31,31 @@ class _FullScreenPlayerState extends State<FullScreenPlayer> {
     super.dispose();
   }
 
+  Future<void> _initializeVideo() async {
+    videoPlayerController = VideoPlayerController.asset(widget.videoUrl);
+    try{
+      await videoPlayerController.initialize();
+      if (mounted) {
+        setState(() {
+          isInitialized = true;
+        });
+        //reproducir el video
+        await videoPlayerController.play();
+      }
+    } catch (e) {
+      debugPrint('Error al inicializar el video: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: videoPlayerController.initialize(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState != ConnectionState.done) {
-          return const Center(child: CircularProgressIndicator());
-        }
+    if (!isInitialized) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
-        return AspectRatio(
-          aspectRatio: videoPlayerController.value.aspectRatio,
-          child: VideoPlayer(videoPlayerController),
-        );
-      },
+    return AspectRatio(
+      aspectRatio: videoPlayerController.value.aspectRatio,
+      child: VideoPlayer(videoPlayerController),
     );
   }
 }
