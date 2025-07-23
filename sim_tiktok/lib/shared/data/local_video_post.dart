@@ -2,7 +2,7 @@ List<Map<String, dynamic>> videoPost=[
   {
     "name": "Subiendo Escaleras",
     "caption": "Subiendo Escaleras",
-    "videoUrl": "lib/assets/videos/1.mp4",
+    "videoUrl": "assets/videos/1.mp4",
     "likes": 10234234,
     "comments": 2242343676,
     "views": 100234234,
@@ -10,7 +10,7 @@ List<Map<String, dynamic>> videoPost=[
   {
     "name": "Flores en el jardín",
     "caption": "Flores en el jardín",
-    "videoUrl": "lib/assets/videos/2.mp4",
+    "videoUrl": "assets/videos/2.mp4",
     "likes": 4000,
     "comments": 20202002,
     "views": 100023,
@@ -18,7 +18,7 @@ List<Map<String, dynamic>> videoPost=[
   {
     "name": "Mirando el lago",
     "caption": "Mirando el lago",
-    "videoUrl": "lib/assets/videos/3.mp4",
+    "videoUrl": "assets/videos/3.mp4",
     "likes": 10,
     "comments": 2,
     "views": 100,
@@ -26,7 +26,7 @@ List<Map<String, dynamic>> videoPost=[
   {
     "name": "Trigo en el campo",
     "caption": "Trigo en el campo",
-    "videoUrl": "lib/assets/videos/4.mp4",
+    "videoUrl": "assets/videos/4.mp4",
     "likes": 1,
     "comments": 1,
     "views": 20,
@@ -34,7 +34,7 @@ List<Map<String, dynamic>> videoPost=[
   {
     "name": "Covid",
     "caption": "Covid",
-    "videoUrl": "lib/assets/videos/5.mp4",
+    "videoUrl": "assets/videos/5.mp4",
     "likes": 23,
     "comments": 4,
     "views": 90,
@@ -42,7 +42,7 @@ List<Map<String, dynamic>> videoPost=[
   {
     "name": "Sombrilla",
     "caption": "Sombrilla",
-    "videoUrl": "lib/assets/videos/6.mp4",
+    "videoUrl": "assets/videos/6.mp4",
     "likes": 50,
     "comments": 232,
     "views": 500,
@@ -50,7 +50,7 @@ List<Map<String, dynamic>> videoPost=[
   {
     "name": "Palomas en el puente",
     "caption": "Palomas en el puente",
-    "videoUrl": "lib/assets/videos/7.mp4",
+    "videoUrl": "assets/videos/7.mp4",
     "likes": 30,
     "comments": 1,
     "views": 2,
@@ -58,7 +58,7 @@ List<Map<String, dynamic>> videoPost=[
   {
     "name": "RoadTrip en el desierto",
     "caption": "RoadTrip en el desierto",
-    "videoUrl": "lib/assets/videos/8.mp4",
+    "videoUrl": "assets/videos/8.mp4",
     "likes": 230,
     "comments": 22,
     "views": 1002,
