@@ -1,4 +1,5 @@
 class VideoPost {
+  final String name;
   final String caption;
   final String videoUrl;
   final int likes;
@@ -6,6 +7,7 @@ class VideoPost {
   final int views;
 
   VideoPost({
+    required this.name,
     required this.caption,
     required this.videoUrl,
     this.likes = 0,

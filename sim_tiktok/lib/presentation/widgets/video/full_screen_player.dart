@@ -4,11 +4,13 @@ import 'package:video_player/video_player.dart';
 class FullScreenPlayer extends StatefulWidget {
   final String videoUrl;
   final String caption;
+  final String name;
 
   const FullScreenPlayer({
     super.key,
     required this.videoUrl,
     required this.caption,
+    required this.name,
   });
 
   @override
@@ -33,7 +35,7 @@ class _FullScreenPlayerState extends State<FullScreenPlayer> {
 
   Future<void> _initializeVideo() async {
     videoPlayerController = VideoPlayerController.asset(widget.videoUrl);
-    try{
+    try {
       await videoPlayerController.initialize();
       if (mounted) {
         setState(() {
@@ -54,10 +56,6 @@ class _FullScreenPlayerState extends State<FullScreenPlayer> {
       return const Center(child: CircularProgressIndicator());
     }
 
-   /*  return AspectRatio(
-      aspectRatio: videoPlayerController.value.aspectRatio,
-      child: VideoPlayer(videoPlayerController),
-    ); */
     return GestureDetector(
       onTap: () {
         if (videoPlayerController.value.isPlaying) {
@@ -66,7 +64,50 @@ class _FullScreenPlayerState extends State<FullScreenPlayer> {
           videoPlayerController.play();
         }
       },
-      child: AspectRatio(aspectRatio: videoPlayerController.value.aspectRatio, child: VideoPlayer(videoPlayerController),),
+      child: AspectRatio(
+        aspectRatio: videoPlayerController.value.aspectRatio,
+        child: Stack(
+          children: [
+            VideoPlayer(videoPlayerController),
+            //gradiente
+            //caption
+            Positioned(
+              bottom: 30,
+              left: 25,
+              right: 0,
+              child: _VideoCaption(name: widget.name, caption: widget.caption),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _VideoCaption extends StatelessWidget {
+  final String name;
+  final String caption;
+
+  const _VideoCaption({required this.name, required this.caption});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            name,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          Text(caption, style: const TextStyle(fontSize: 14)),
+        ],
+      ),
     );
   }
 }

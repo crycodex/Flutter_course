@@ -1,6 +1,6 @@
 List<Map<String, dynamic>> videoPost=[
   {
-    "name": "Subiendo Escaleras",
+    "name": "user1",
     "caption": "Subiendo Escaleras",
     "videoUrl": "assets/videos/1.mp4",
     "likes": 10234234,
@@ -8,7 +8,7 @@ List<Map<String, dynamic>> videoPost=[
     "views": 100234234,
   },
   {
-    "name": "Flores en el jardín",
+    "name": "user2",
     "caption": "Flores en el jardín",
     "videoUrl": "assets/videos/2.mp4",
     "likes": 4000,
@@ -16,7 +16,7 @@ List<Map<String, dynamic>> videoPost=[
     "views": 100023,
   },
   {
-    "name": "Mirando el lago",
+    "name": "user3",
     "caption": "Mirando el lago",
     "videoUrl": "assets/videos/3.mp4",
     "likes": 10,
@@ -24,7 +24,7 @@ List<Map<String, dynamic>> videoPost=[
     "views": 100,
   },
   {
-    "name": "Trigo en el campo",
+    "name": "user4",
     "caption": "Trigo en el campo",
     "videoUrl": "assets/videos/4.mp4",
     "likes": 1,
@@ -32,7 +32,7 @@ List<Map<String, dynamic>> videoPost=[
     "views": 20,
   },
   {
-    "name": "Covid",
+    "name": "user5",
     "caption": "Covid",
     "videoUrl": "assets/videos/5.mp4",
     "likes": 23,
@@ -40,7 +40,7 @@ List<Map<String, dynamic>> videoPost=[
     "views": 90,
   },
   {
-    "name": "Sombrilla",
+    "name": "user6",
     "caption": "Sombrilla",
     "videoUrl": "assets/videos/6.mp4",
     "likes": 50,
@@ -48,7 +48,7 @@ List<Map<String, dynamic>> videoPost=[
     "views": 500,
   },
   {
-    "name": "Palomas en el puente",
+    "name": "user7",
     "caption": "Palomas en el puente",
     "videoUrl": "assets/videos/7.mp4",
     "likes": 30,
@@ -56,7 +56,7 @@ List<Map<String, dynamic>> videoPost=[
     "views": 2,
   },
   {
-    "name": "RoadTrip en el desierto",
+    "name": "user8",
     "caption": "RoadTrip en el desierto",
     "videoUrl": "assets/videos/8.mp4",
     "likes": 230,
