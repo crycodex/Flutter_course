@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../presentation/screens/home/home_screen.dart';
-import '../../presentation/screens/buttons/buttons_screns.dart';
+import '../../presentation/screens/buttons/buttons_screen.dart';
 
 class AppRoutes {
   static const initialRoute = '/';
