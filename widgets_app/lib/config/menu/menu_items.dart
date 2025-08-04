@@ -25,7 +25,7 @@ const appMenuItems = <MenuItem>[
   MenuItem(
     title: 'Theme Changer',
     subTitle: 'Theme Changer',
-    url: '/',
+    url: '/theme-changer',
     icon: Icons.color_lens,
   ),
   MenuItem(
