@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import '../../config/routes/routes.dart';
 
-class MenuItem{
+class MenuItem {
   final String title;
   final String subTitle;
   final String url;
   final IconData icon;
 
   const MenuItem({
-     this.title = '',
-     this.subTitle = '',
-     this.url = '',
-     this.icon = Icons.ac_unit,
+    this.title = '',
+    this.subTitle = '',
+    this.url = '',
+    this.icon = Icons.ac_unit,
   });
 }
 
@@ -26,5 +27,11 @@ const appMenuItems = <MenuItem>[
     subTitle: 'Theme Changer',
     url: '/theme-changer',
     icon: Icons.color_lens,
+  ),
+  MenuItem(
+    title: 'Buttons',
+    subTitle: 'Buttons',
+    url: AppRoutes.buttonsRoute,
+    icon: Icons.smart_button,
   ),
 ];

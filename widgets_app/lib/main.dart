@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './config/theme/app_theme.dart';
-import './presentation/screens/home/home_screen.dart';
+import './config/routes/routes.dart';
 
 void main() {
   runApp(const MainApp());
@@ -14,7 +14,8 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme(selectedColor: 1).getTheme(),
-      home: const HomeScreen(),
+      initialRoute: AppRoutes.initialRoute,
+      routes: AppRoutes.routes,
     );
   }
 }
