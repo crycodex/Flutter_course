@@ -10,6 +10,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Flutter Wigets APP'),
         centerTitle: false,
+        automaticallyImplyLeading: false,
       ),
       body: _HomeView(),
     );
