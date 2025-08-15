@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../config/routes/routes.dart';
+import '../../presentation/screens.dart';
 
 class MenuItem {
   final String title;
@@ -33,5 +34,11 @@ const appMenuItems = <MenuItem>[
     subTitle: 'Buttons',
     url: AppRoutes.buttonsRoute,
     icon: Icons.smart_button,
+  ),
+  MenuItem(
+    title: 'Progress Indicator',
+    subTitle: 'Progress Indicator',
+    url: "/progress",
+    icon: Icons.refresh,
   ),
 ];

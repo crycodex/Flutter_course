@@ -6,14 +6,36 @@ void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  //variablle estatica
+  static _MainAppState? _instance;
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  int selectedColor = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    MainApp._instance = this;
+  }
+
+  @override
+  void dispose() {
+    MainApp._instance = null;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: AppTheme(selectedColor: 6).getTheme(),
+      theme: AppTheme(selectedColor: AppRoutes.selectedColor).getTheme(),
       initialRoute: AppRoutes.initialRoute,
       routes: AppRoutes.routes,
     );
