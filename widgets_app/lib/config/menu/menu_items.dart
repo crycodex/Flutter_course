@@ -41,4 +41,10 @@ const appMenuItems = <MenuItem>[
     url: "/progress",
     icon: Icons.refresh,
   ),
+  MenuItem(
+    title: 'Snackbar',
+    subTitle: 'Snackbar',
+    url: "/snackbar",
+    icon: Icons.add_alert,
+  ),
 ];
