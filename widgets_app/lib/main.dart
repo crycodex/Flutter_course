@@ -9,9 +9,6 @@ void main() {
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
-  //variablle estatica
-  static _MainAppState? _instance;
-
   @override
   State<MainApp> createState() => _MainAppState();
 }
@@ -22,12 +19,10 @@ class _MainAppState extends State<MainApp> {
   @override
   void initState() {
     super.initState();
-    MainApp._instance = this;
   }
 
   @override
   void dispose() {
-    MainApp._instance = null;
     super.dispose();
   }
 
