@@ -6,6 +6,8 @@ import '../../presentation/screens/theme_changer/theme_changer.dart';
 import '../../presentation/screens/progress/progress_screen.dart';
 import '../../presentation/screens/snackbar/snack_bar_screen.dart';
 import '../../presentation/screens/animated/animated_screen.dart';
+import '../../presentation/screens/ui_controls/ui_controls_screen.dart';
+
 
 class AppRoutes {
   static int selectedColor = 1;
@@ -17,6 +19,7 @@ class AppRoutes {
   static const progressRoute = '/progress';
   static const snackbarRoute = '/snackbar';
   static const animatedRoute = '/animated-container';
+  static const uiControlsRoute = '/ui-controls';
 
   static final Map<String, Widget Function(BuildContext)> routes = {
     initialRoute: (context) => const HomeScreen(),
@@ -30,5 +33,6 @@ class AppRoutes {
     progressRoute: (context) => const ProgressScreen(),
     snackbarRoute: (context) => const SnackBarScreen(),
     animatedRoute: (context) => const AnimatedScreen(),
+    uiControlsRoute: (context) => const UiControlsScreen(),
   };
 }
