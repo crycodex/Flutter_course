@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../config/routes/routes.dart';
-import '../../presentation/screens.dart';
 
 class MenuItem {
   final String title;
@@ -46,5 +45,11 @@ const appMenuItems = <MenuItem>[
     subTitle: 'Snackbar',
     url: "/snackbar",
     icon: Icons.add_alert,
+  ),
+  MenuItem(
+    title: 'Animated Container',
+    subTitle: 'Animated Container',
+    url: "/animated-container",
+    icon: Icons.animation,
   ),
 ];
