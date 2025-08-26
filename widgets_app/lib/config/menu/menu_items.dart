@@ -64,4 +64,10 @@ const appMenuItems = <MenuItem>[
     url: "/ui-controls",
     icon: Icons.control_point,
   ),
+  MenuItem(
+    title: 'Infinite Scroll',
+    subTitle: 'Infinite Scroll',
+    url: "/infinite-scroll",
+    icon: Icons.view_list,
+  ),
 ];
