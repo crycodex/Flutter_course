@@ -7,6 +7,7 @@ import '../../presentation/screens/progress/progress_screen.dart';
 import '../../presentation/screens/snackbar/snack_bar_screen.dart';
 import '../../presentation/screens/animated/animated_screen.dart';
 import '../../presentation/screens/ui_controls/ui_controls_screen.dart';
+import '../../presentation/screens/app_tutorial/app_tutorial_screen.dart';
 
 
 class AppRoutes {
@@ -20,6 +21,7 @@ class AppRoutes {
   static const snackbarRoute = '/snackbar';
   static const animatedRoute = '/animated-container';
   static const uiControlsRoute = '/ui-controls';
+  static const appTutorialRoute = '/app-tutorial';
 
   static final Map<String, Widget Function(BuildContext)> routes = {
     initialRoute: (context) => const HomeScreen(),
@@ -34,5 +36,6 @@ class AppRoutes {
     snackbarRoute: (context) => const SnackBarScreen(),
     animatedRoute: (context) => const AnimatedScreen(),
     uiControlsRoute: (context) => const UiControlsScreen(),
+    appTutorialRoute: (context) => const AppTutorialScreen(),
   };
 }

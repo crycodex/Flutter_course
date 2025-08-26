@@ -17,6 +17,12 @@ class MenuItem {
 
 const appMenuItems = <MenuItem>[
   MenuItem(
+    title: 'App Tutorial',
+    subTitle: 'Page View, Tabs, and Sliders',
+    url: "/app-tutorial",
+    icon: Icons.app_registration,
+  ),
+  MenuItem(
     title: 'Cards',
     subTitle: 'Cards',
     url: '/cards',
