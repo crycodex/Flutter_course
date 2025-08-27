@@ -31,6 +31,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
+  # Riverpod
+  riverpod: ^2.6.1
 
 dev_dependencies:
 

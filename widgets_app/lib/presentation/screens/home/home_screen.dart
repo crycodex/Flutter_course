@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import '../../../config/menu/menu_items.dart';
+import '../../../presentation/widgets/drawer/side_menu.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: const Text('Flutter Wigets APP'),
         centerTitle: false,
-        automaticallyImplyLeading: false,
       ),
       body: _HomeView(),
+      drawer: SideMenu(scaffoldKey: scaffoldKey),
     );
   }
 }

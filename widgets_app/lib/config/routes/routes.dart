@@ -10,7 +10,6 @@ import '../../presentation/screens/ui_controls/ui_controls_screen.dart';
 import '../../presentation/screens/app_tutorial/app_tutorial_screen.dart';
 import '../../presentation/screens/infite_scroll/infite_scroll.dart';
 
-
 class AppRoutes {
   static int selectedColor = 1;
 
@@ -26,7 +25,7 @@ class AppRoutes {
   static const infiniteScrollRoute = '/infinite-scroll';
 
   static final Map<String, Widget Function(BuildContext)> routes = {
-    initialRoute: (context) => const HomeScreen(),
+    initialRoute: (context) => HomeScreen(),
     buttonsRoute: (context) => const ButtonsScreen(),
     cardsRoute: (context) => const CardsScreen(),
     themeChangerRoute: (context) => ThemeChangerScreen(
