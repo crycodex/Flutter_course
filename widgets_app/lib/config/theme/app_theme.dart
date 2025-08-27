@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+
 class AppTheme{
 
   final int selectedColor;
+  final bool isDarkMode;
 
   static const colorList = <Color>[
     Colors.black,
@@ -20,10 +22,12 @@ class AppTheme{
 
   AppTheme({
     this.selectedColor = 0,
+    this.isDarkMode = false,
   }):assert(selectedColor >= 0, 'Seleciona un color valido');
 
   ThemeData getTheme() => ThemeData(
     useMaterial3: true,
     colorSchemeSeed: colorList[selectedColor],
+    brightness: isDarkMode ? Brightness.dark : Brightness.light,
   );
 }

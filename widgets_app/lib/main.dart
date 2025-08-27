@@ -22,9 +22,13 @@ class _MainAppState extends State<MainApp> {
       child: Consumer(
         builder: (context, ref, child) {
           final selectedColor = ref.watch(themeProvider);
+          final isDarkMode = ref.watch(isDarkModeProvider);
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: AppTheme(selectedColor: selectedColor).getTheme(),
+            theme: AppTheme(
+              selectedColor: selectedColor,
+              isDarkMode: isDarkMode,
+            ).getTheme(),
             initialRoute: AppRoutes.initialRoute,
             routes: AppRoutes.routes,
           );
