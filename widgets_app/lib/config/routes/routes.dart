@@ -9,6 +9,7 @@ import '../../presentation/screens/animated/animated_screen.dart';
 import '../../presentation/screens/ui_controls/ui_controls_screen.dart';
 import '../../presentation/screens/app_tutorial/app_tutorial_screen.dart';
 import '../../presentation/screens/infite_scroll/infite_scroll.dart';
+import '../../presentation/screens/counter/counter_screen.dart';
 
 class AppRoutes {
   static int selectedColor = 1;
@@ -23,7 +24,8 @@ class AppRoutes {
   static const uiControlsRoute = '/ui-controls';
   static const appTutorialRoute = '/app-tutorial';
   static const infiniteScrollRoute = '/infinite-scroll';
-
+  static const counterRoute = '/counter';
+  
   static final Map<String, Widget Function(BuildContext)> routes = {
     initialRoute: (context) => HomeScreen(),
     buttonsRoute: (context) => const ButtonsScreen(),
@@ -39,5 +41,6 @@ class AppRoutes {
     uiControlsRoute: (context) => const UiControlsScreen(),
     appTutorialRoute: (context) => const AppTutorialScreen(),
     infiniteScrollRoute: (context) => const InfiniteScrollScreen(),
+    counterRoute: (context) =>  CounterScreen(),
   };
 }

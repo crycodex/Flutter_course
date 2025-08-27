@@ -70,4 +70,10 @@ const appMenuItems = <MenuItem>[
     url: "/infinite-scroll",
     icon: Icons.view_list,
   ),
+  MenuItem(
+    title: 'Counter',
+    subTitle: 'Counter',
+    url: "/counter",
+    icon: Icons.add,
+  ),
 ];

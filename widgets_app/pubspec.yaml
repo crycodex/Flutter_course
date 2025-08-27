@@ -32,7 +32,7 @@ dependencies:
   flutter:
     sdk: flutter
   # Riverpod
-  riverpod: ^2.6.1
+  flutter_riverpod: ^2.6.1
 
 dev_dependencies:
 

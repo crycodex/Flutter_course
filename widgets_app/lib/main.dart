@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './config/theme/app_theme.dart';
 import './config/routes/routes.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   runApp(const MainApp());
@@ -28,11 +29,13 @@ class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme(selectedColor: AppRoutes.selectedColor).getTheme(),
-      initialRoute: AppRoutes.initialRoute,
-      routes: AppRoutes.routes,
+    return ProviderScope(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme(selectedColor: AppRoutes.selectedColor).getTheme(),
+        initialRoute: AppRoutes.initialRoute,
+        routes: AppRoutes.routes,
+      ),
     );
   }
 }

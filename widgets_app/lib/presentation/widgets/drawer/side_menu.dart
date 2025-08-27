@@ -67,6 +67,10 @@ class _SideMenuState extends State<SideMenu> {
           icon: Icon(Icons.view_list),
           label: Text('Infinite Scroll'),
         ),
+        NavigationDrawerDestination(
+          icon: Icon(Icons.add),
+          label: Text('Counter'),
+        ),
       ],
     );
   }
