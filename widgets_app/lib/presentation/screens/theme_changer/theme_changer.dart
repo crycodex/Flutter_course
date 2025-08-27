@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../config/theme/app_theme.dart';
+import '../../providers/theme_provider.dart';
 
-class ThemeChangerScreen extends StatefulWidget {
-  final Function(int) ontThemeChanged;
-
-  const ThemeChangerScreen({super.key, required this.ontThemeChanged});
-
-  @override
-  State<ThemeChangerScreen> createState() => _ThemeChangerScreenState();
-}
-
-class _ThemeChangerScreenState extends State<ThemeChangerScreen> {
-  int selectedColor = 0;
+class ThemeChangerScreen extends ConsumerWidget {
+  const ThemeChangerScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedColor = ref.watch(themeProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Theme Changer')),
       body: Padding(
@@ -22,10 +17,10 @@ class _ThemeChangerScreenState extends State<ThemeChangerScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Seleciona un color: ', style: TextStyle(fontSize: 20)),
+            const Text('Seleciona un color: ', style: TextStyle(fontSize: 20)),
             Expanded(
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
@@ -36,11 +31,8 @@ class _ThemeChangerScreenState extends State<ThemeChangerScreen> {
                   final color = AppTheme.colorList[index];
                   return GestureDetector(
                     onTap: () {
-                      setState(() {
-                        selectedColor = index;
-                        widget.ontThemeChanged(index);
-                      });
-                      print("selectedColor: $selectedColor");
+                      ref.read(themeProvider.notifier).state = index;
+                      print("selectedColor: $index");
                     },
                     child: _ColorBox(
                       color: color,

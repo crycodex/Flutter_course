@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import './config/theme/app_theme.dart';
 import './config/routes/routes.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import './presentation/providers/theme_provider.dart';
 
 void main() {
   runApp(const MainApp());
@@ -15,26 +16,19 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  int selectedColor = 1;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme(selectedColor: AppRoutes.selectedColor).getTheme(),
-        initialRoute: AppRoutes.initialRoute,
-        routes: AppRoutes.routes,
+      child: Consumer(
+        builder: (context, ref, child) {
+          final selectedColor = ref.watch(themeProvider);
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme(selectedColor: selectedColor).getTheme(),
+            initialRoute: AppRoutes.initialRoute,
+            routes: AppRoutes.routes,
+          );
+        },
       ),
     );
   }

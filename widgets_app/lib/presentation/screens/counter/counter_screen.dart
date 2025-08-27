@@ -20,6 +20,8 @@ class CounterScreen extends ConsumerWidget {
         },
         child: Icon(Icons.add),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
     );
   }
 }

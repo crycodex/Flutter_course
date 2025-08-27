@@ -12,8 +12,6 @@ import '../../presentation/screens/infite_scroll/infite_scroll.dart';
 import '../../presentation/screens/counter/counter_screen.dart';
 
 class AppRoutes {
-  static int selectedColor = 1;
-
   static const initialRoute = '/';
   static const buttonsRoute = '/buttons';
   static const cardsRoute = '/cards';
@@ -25,22 +23,18 @@ class AppRoutes {
   static const appTutorialRoute = '/app-tutorial';
   static const infiniteScrollRoute = '/infinite-scroll';
   static const counterRoute = '/counter';
-  
+
   static final Map<String, Widget Function(BuildContext)> routes = {
     initialRoute: (context) => HomeScreen(),
     buttonsRoute: (context) => const ButtonsScreen(),
     cardsRoute: (context) => const CardsScreen(),
-    themeChangerRoute: (context) => ThemeChangerScreen(
-      ontThemeChanged: (color) {
-        AppRoutes.selectedColor = color;
-      },
-    ),
+    themeChangerRoute: (context) => ThemeChangerScreen(),
     progressRoute: (context) => const ProgressScreen(),
     snackbarRoute: (context) => const SnackBarScreen(),
     animatedRoute: (context) => const AnimatedScreen(),
     uiControlsRoute: (context) => const UiControlsScreen(),
     appTutorialRoute: (context) => const AppTutorialScreen(),
     infiniteScrollRoute: (context) => const InfiniteScrollScreen(),
-    counterRoute: (context) =>  CounterScreen(),
+    counterRoute: (context) => CounterScreen(),
   };
 }
