@@ -1,4 +1,4 @@
-import 'package:cine_app/config/domain/entities/movie.dart';
+import 'package:cine_app/domain/entities/movie.dart';
 
 abstract class MovieData {
 
